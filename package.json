@@ -19,7 +19,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "main": "lib/index.js",
-    "lint": "./node_modules/.bin/eslint"
+    "lint": "./node_modules/.bin/eslint",
+    "deploy": "firebase deploy"
   },
   "eslintConfig": {
     "extends": "react-app"
