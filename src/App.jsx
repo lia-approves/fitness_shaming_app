@@ -1,93 +1,42 @@
-import React from 'react';
-//import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import fire from './fire';
 
-class App extends React.Component {
-constructor(props) {
-	super(props);
-
-	{/*var provider = new firebase.auth.GoogleAuthProvider();
-	firebase.auth().signInWithPopup(provider).then(function(result) {
-		var token = result.credential.accessToken;
-		var user = result.user;
-	}).catch(function(error) {
-		var errorCode = error.code;
-		var errorMessage = error.message;
-		var email = error.email;
-		var credential = error.credential;
-	});*/}
-
-	this.state = {
-		calculators: 1
-	}
-}
-
-	updateCalculators = event => {
-		this.setState({calculators: parseInt(event.target.value)});
-	}
-
-	render() {
-	let calculators = [...Array(this.state.calculators)].map((_, i) => <Calculator />);
-	return (
-    <div className="App">
-      <header className="App-header">
-{/*        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-*/}
-<CalculatorSelect calculators={this.state.calculators} onChange={this.updateCalculators} />
-	{calculators}
-      </header>
-    </div>
-  );
-	}
-}
-
-class CalculatorSelect extends React.Component {
-	render() {
-		return (
-			<div>
-			1<input max="5" min="1" onChange={this.props.onChange} type="range" value={this.props.calculators} />5
-			</div>
-		);
-	}
-}
-
-class Calculator extends React.Component {
+class App extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			lhs: "",
-			rhs: ""
-		}
-	}
-
-	onChange = event => {
-		//{/*this.setState({[event.target.name]: parseInt(event.target.value) || 0});*/}
-		let value = parseInt(event.target.value) || "";
-		this.setState({[event.target.name]: value});
-	}
-	
-	render() {
-		return (
-			<div>
-			<input placeholder="lhs" name="lhs" onChange={this.onChange} value={this.state.lhs}/>
-			+
-			<input placeholder="rhs" name="rhs" onChange={this.onChange} value={this.state.rhs}/>
-			=
-			<input placeholder="result" value={this.state.lhs + this.state.rhs} disabled />
-			</div>
-		);
+		this.state = {};
 	}
 }
+
+class signInButton extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {};
+	}
+	
+	signIn = event => {
+		var provider = new firebase.auth.GoogleAuthProvider();
+		firebase.auth().signInWithPopup(provider);
+	}
+
+	signOut = event => {
+		firebase.auth().signOut();
+	}
+
+	render() {
+	      <div id="user-container">
+			<div hidden id="user-pic"></div>
+			<div hidden id="user-name"></div>
+			<button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" onPress={this.signOut}>
+			          Sign-out
+		        </button>
+			        <button id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white" onPress={this.signIn}>
+			          <i class="material-icons">account_circle</i>Sign-in with Google
+		        </button>
+		</div>
+	}
+}
+
+
 
 export default App;
